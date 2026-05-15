@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exquisite Painting | Premium Painting Services Northern Beaches Sydney</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #2c3e50;
+            --soft-navy: #3d5a73;
+            --white: #ffffff;
+            --soft-gray: #f5f7fa;
+            --lighter-gray: #fafbfc;
+            --text: #2c3e50;
+            --text-light: #666;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            color: var(--text);
+            background: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(8px); }
+        }
+
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+        .stagger-5 { transition-delay: 0.5s; }
+        .stagger-6 { transition-delay: 0.6s; }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 500;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(44, 62, 80, 0.08);
+        }
+
+        .nav-logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--navy);
+            letter-spacing: -0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--navy);
+            transition: width 0.4s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--navy);
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--navy);
+            color: var(--white);
+            padding: 0.8rem 2rem;
+            border-radius: 3px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.4s ease;
+            border: 2px solid var(--navy);
+            cursor: pointer;
+        }
+
+        .nav-cta:hover {
+            background: var(--white);
+            color: var(--navy);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(44, 62, 80, 0.15);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            gap: 6px;
+            z-index: 600;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: var(--navy);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0);
+            z-index: 40;
+            transition: background 0.3s ease;
+        }
+
+        .mobile-overlay.active {
+            display: block;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            left: -100%;
+            top: 0;
+            width: 85%;
+            max-width: 320px;
+            height: 100vh;
+            background: var(--white);
+            z-index: 50;
+            overflow-y: auto;
+            transition: left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            padding-top: 5rem;
+        }
+
+        .mobile-menu.active {
+            display: block;
+            left: 0;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 1.2rem 1.5rem;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 1rem;
+            border-bottom: 1px solid rgba(44, 62, 80, 0.1);
+            transition: all 0.3s ease;
+            animation: slideInLeft 0.4s ease-out forwards;
+            opacity: 0;
+        }
+
+        .mobile-menu a:hover {
+            background: var(--soft-gray);
+            color: var(--navy);
+        }
+
+        .mobile-menu a:nth-child(1) { animation-delay: 0.05s; }
+        .mobile-menu a:nth-child(2) { animation-delay: 0.1s; }
+        .mobile-menu a:nth-child(3) { animation-delay: 0.15s; }
+        .mobile-menu a:nth-child(4) { animation-delay: 0.2s; }
+        .mobile-menu a:nth-child(5) { animation-delay: 0.25s; }
+        .mobile-menu a:nth-child(6) { animation-delay: 0.3s; }
+        .mobile-menu a:nth-child(7) { animation-delay: 0.35s; }
+
+        .mobile-menu.active a {
+            opacity: 1;
+        }
+
+        .mobile-menu-contact {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(44, 62, 80, 0.1);
+            margin-top: 1rem;
+            animation: slideInLeft 0.4s ease-out 0.4s both;
+        }
+
+        .mobile-menu-contact p {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .mobile-menu-contact a {
+            display: block;
+            padding: 0;
+            border: none;
+            font-size: 0.9rem;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            nav {
+                padding: 1rem 1.5rem;
+            }
+        }
+
+        .page-container {
+            margin-top: 70px;
+            display: none;
+        }
+
+        .page-container.active {
+            display: block;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--white) 0%, var(--soft-gray) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 60%;
+            height: 120%;
+            background: radial-gradient(circle, rgba(44, 62, 80, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            letter-spacing: -1.5px;
+            animation: slideInUp 0.9s ease-out 0.2s both;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 400;
+            animation: slideInUp 0.9s ease-out 0.4s both;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideInUp 0.9s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 1.1rem 2.8rem;
+            border-radius: 3px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            display: inline-block;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-primary {
+            background: var(--navy);
+            color: var(--white);
+            border-color: var(--navy);
+        }
+
+        .btn-primary:hover {
+            background: var(--white);
+            color: var(--navy);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(44, 62, 80, 0.18);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--navy);
+            border-color: var(--navy);
+        }
+
+        .btn-secondary:hover {
+            background: var(--navy);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(44, 62, 80, 0.18);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: float 3s ease-in-out infinite;
+            cursor: pointer;
+            color: var(--navy);
+        }
+
+        section {
+            padding: 8rem 3rem;
+            background: var(--white);
+        }
+
+        section.gray {
+            background: var(--soft-gray);
+        }
+
+        .section-header {
+            max-width: 900px;
+            margin: 0 auto 4rem;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.8px;
+            animation: slideInUp 0.9s ease-out;
+        }
+
+        .section-header p {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: slideInUp 0.9s ease-out 0.2s both;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 4px;
+            border-top: 4px solid var(--navy);
+            box-shadow: 0 2px 12px rgba(44, 62, 80, 0.06);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        section.gray .service-card {
+            background: var(--white);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--soft-gray);
+            transition: left 0.6s ease;
+            z-index: 0;
+        }
+
+        .service-card:hover::before {
+            left: 0;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(44, 62, 80, 0.12);
+        }
+
+        .service-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-card h3 {
+            font-size: 1.6rem;
+            color: var(--navy);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.3px;
+        }
+
+        .service-card p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 1.2rem;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: flex-start;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.3px;
+        }
+
+        .about-text h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.9;
+        }
+
+        .about-highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        .highlight {
+            background: var(--soft-gray);
+            padding: 2rem;
+            border-radius: 4px;
+            border-left: 4px solid var(--navy);
+            transition: all 0.4s ease;
+        }
+
+        .highlight:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(44, 62, 80, 0.08);
+        }
+
+        .highlight h4 {
+            color: var(--navy);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            margin-top: 0;
+        }
+
+        .highlight p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .about-image {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--soft-navy) 100%);
+            height: 450px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.3rem;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .process-step {
+            background: var(--white);
+            padding: 3rem 2.5rem;
+            border-radius: 4px;
+            position: relative;
+            border-top: 4px solid var(--navy);
+            box-shadow: 0 2px 12px rgba(44, 62, 80, 0.06);
+            transition: all 0.4s ease;
+        }
+
+        section.gray .process-step {
+            background: var(--white);
+        }
+
+        .process-step:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(44, 62, 80, 0.1);
+        }
+
+        .process-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: rgba(44, 62, 80, 0.15);
+            margin-bottom: 1rem;
+        }
+
+        .process-step h3 {
+            font-size: 1.4rem;
+            color: var(--navy);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .process-step p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .areas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .area-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 4px;
+            border-bottom: 4px solid var(--navy);
+            box-shadow: 0 2px 12px rgba(44, 62, 80, 0.06);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        section.gray .area-card {
+            background: var(--white);
+        }
+
+        .area-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(44, 62, 80, 0.1);
+        }
+
+        .area-card h3 {
+            font-size: 1.4rem;
+            color: var(--navy);
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
+        .area-card p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .suburb-list {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(44, 62, 80, 0.1);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 4px;
+            border-left: 4px solid var(--navy);
+            box-shadow: 0 2px 12px rgba(44, 62, 80, 0.06);
+            transition: all 0.4s ease;
+        }
+
+        section.gray .testimonial {
+            background: var(--white);
+        }
+
+        .testimonial:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(44, 62, 80, 0.1);
+        }
+
+        .testimonial-text {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--navy);
+            font-size: 0.95rem;
+        }
+
+        .testimonial-role {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--white);
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+            border-left: 4px solid var(--navy);
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(44, 62, 80, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        section.gray .faq-item {
+            background: var(--white);
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 8px 20px rgba(44, 62, 80, 0.08);
+        }
+
+        .faq-question {
+            padding: 1.8rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--navy);
+            font-size: 1.05rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .faq-question:hover {
+            background: var(--soft-gray);
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer-content {
+            padding: 0 1.8rem 1.8rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .quote-section {
+            background: var(--navy);
+            color: var(--white);
+            text-align: center;
+            padding: 10rem 3rem;
+        }
+
+        .quote-section h2 {
+            font-size: 3.5rem;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.8px;
+        }
+
+        .quote-section p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        .quote-form {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 0.95rem 1.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--white);
+            border-radius: 3px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-group select {
+            cursor: pointer;
+        }
+
+        .form-group select option {
+            background: var(--navy);
+        }
+
+        .form-submit {
+            background: var(--white);
+            color: var(--navy);
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 3px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            width: 100%;
+            margin-top: 1.5rem;
+            letter-spacing: 0.3px;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 2.5rem;
+            border-radius: 3px;
+            border-left: 4px solid var(--white);
+            margin-top: 3.5rem;
+        }
+
+        .contact-info p {
+            margin: 1rem 0;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .contact-info a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: #1a2838;
+            color: rgba(255, 255, 255, 0.85);
+            padding: 4rem 3rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--white);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p {
+            margin: 0.6rem 0;
+            line-height: 1.8;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-bottom p {
+            margin: 0.4rem 0;
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 4rem 1.5rem;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .about-highlights {
+                grid-template-columns: 1fr;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .quote-section {
+                padding: 5rem 1.5rem;
+            }
+            .quote-section h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-logo" onclick="navigateTo('home'); closeMobileMenu();">Exquisite</div>
+        <ul class="nav-menu">
+            <li><a onclick="navigateTo('services')">Services</a></li>
+            <li><a onclick="navigateTo('about')">About</a></li>
+            <li><a onclick="navigateTo('process')">Process</a></li>
+            <li><a onclick="navigateTo('areas')">Areas</a></li>
+            <li><a onclick="navigateTo('faq')">FAQ</a></li>
+            <li><a onclick="navigateTo('contact')" class="nav-cta">Free Quote</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <a onclick="navigateTo('home'); closeMobileMenu();">Home</a>
+        <a onclick="navigateTo('services'); closeMobileMenu();">Services</a>
+        <a onclick="navigateTo('about'); closeMobileMenu();">About</a>
+        <a onclick="navigateTo('process'); closeMobileMenu();">Process</a>
+        <a onclick="navigateTo('areas'); closeMobileMenu();">Service Areas</a>
+        <a onclick="navigateTo('faq'); closeMobileMenu();">FAQ</a>
+        <a onclick="navigateTo('contact'); closeMobileMenu();" style="border-bottom: none;">Free Quote</a>
+        <div class="mobile-menu-contact">
+            <p>Contact</p>
+            <a href="tel:0402049320">0402 049 320</a>
+            <a href="mailto:exquisitepainting@live.com.au">exquisitepainting@live.com.au</a>
+        </div>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page-container active">
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-eyebrow">PREMIUM PAINTING SINCE 1999</div>
+                <h1>Exquisite Painting Transforms Your Property</h1>
+                <p class="hero-subtitle">25 years of professional excellence across Northern Beaches. Expert interior, exterior, and roof painting. Premium materials. Flawless execution. Lasting results. This is what quality looks like.</p>
+                <div class="hero-ctas">
+                    <a href="javascript:void(0)" onclick="navigateTo('services')" class="btn btn-primary">Explore Services</a>
+                    <a href="javascript:void(0)" onclick="navigateTo('contact')" class="btn btn-secondary">Get Your Quote</a>
+                </div>
+            </div>
+            <div class="scroll-indicator" onclick="document.querySelector('body').scrollIntoView({ behavior: 'smooth' })">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </div>
+        </section>
+
+        <section class="gray">
+            <div class="section-header">
+                <h2>Why Choose Exquisite Painting</h2>
+                <p>The core values that define our work. The standards we never compromise on. The commitment that makes us different.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card scroll-animate stagger-1">
+                    <h3>25 Years of Excellence</h3>
+                    <p>Since 1999, Exquisite Painting has delivered professional quality work to Northern Beaches. Quarter century of consistent excellence. Hundreds of completed projects. Deep expertise in every painting challenge. Our reputation is built on what we deliver, not on promises.</p>
+                </div>
+                <div class="service-card scroll-animate stagger-2">
+                    <h3>Coastal Expertise</h3>
+                    <p>Northern Beaches requires specialized knowledge. Salt spray, UV exposure, humidity, extreme weather. We understand these conditions intimately. We know which systems work. Which primers bond properly. Which coatings protect year after year. This expertise cannot be faked.</p>
+                </div>
+                <div class="service-card scroll-animate stagger-3">
+                    <h3>Premium Materials Always</h3>
+                    <p>Exquisite Painting specifies only the finest paints and coatings. Budget materials produce budget results. We refuse to compromise. Premium brands deliver superior durability, better colour retention, and richer finishes. Your property deserves the best materials applied properly.</p>
+                </div>
+                <div class="service-card scroll-animate stagger-4">
+                    <h3>Preparation Matters Most</h3>
+                    <p>The difference between painting that lasts and painting that fails is preparation. We do not rush this critical phase. Proper surface assessment. Necessary repairs. Professional priming. Careful application. Meticulous preparation is the foundation of lasting results.</p>
+                </div>
+                <div class="service-card scroll-animate stagger-5">
+                    <h3>Attention to Detail</h3>
+                    <p>Every brush stroke. Every edge. Every trim. Every transition is carefully executed and inspected. We maintain standards that exceed industry norms. Flawless execution and professional quality. That is our standard on every single project without exception.</p>
+                </div>
+                <div class="service-card scroll-animate stagger-6">
+                    <h3>Your Satisfaction Guaranteed</h3>
+                    <p>Quality is our core principle. We stand behind every project with professional workmanship warranty. If something is not right, we fix it. Your happiness with the finished work is the measure of our success. This is our commitment to you.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="gray">
+            <div class="section-header">
+                <h2>What Our Clients Say</h2>
+                <p>Real feedback from real customers who have experienced Exquisite Painting</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial scroll-animate stagger-1">
+                    <p class="testimonial-text">"Exquisite Painting transformed our interior completely. The attention to detail is absolutely remarkable. Every edge is perfect, every finish is flawless. We would not trust anyone else."</p>
+                    <div class="testimonial-author">Sarah Mitchell</div>
+                    <div class="testimonial-role">Collaroy, Northern Beaches</div>
+                </div>
+                <div class="testimonial scroll-animate stagger-2">
+                    <p class="testimonial-text">"25 years in the industry shows in every aspect. Professional, punctual, and superior quality. Our property looks better than when it was originally built."</p>
+                    <div class="testimonial-author">David Chen</div>
+                    <div class="testimonial-role">Manly, Northern Beaches</div>
+                </div>
+                <div class="testimonial scroll-animate stagger-3">
+                    <p class="testimonial-text">"We have used Exquisite Painting for both interior and exterior work multiple times. Consistently exceptional. Meticulous preparation, beautiful finishes, genuine care for our property."</p>
+                    <div class="testimonial-author">Jennifer and Michael Ross</div>
+                    <div class="testimonial-role">Pittwater, Northern Beaches</div>
+                </div>
+                <div class="testimonial scroll-animate stagger-4">
+                    <p class="testimonial-text">"Commercial exterior project. Exquisite Painting managed it flawlessly with no disruption, superior quality, and finished on schedule. Professional excellence throughout."</p>
+                    <div class="testimonial-author">Andrew Thompson</div>
+                    <div class="testimonial-role">Dee Why, Northern Beaches</div>
+                </div>
+                <div class="testimonial scroll-animate stagger-5">
+                    <p class="testimonial-text">"Heritage property restoration requiring specialist knowledge. Exquisite Painting's experience with period appropriate finishes was invaluable. Outstanding work from start to finish."</p>
+                    <div class="testimonial-author">Margaret Collins</div>
+                    <div class="testimonial-role">Narrabeen, Northern Beaches</div>
+                </div>
+                <div class="testimonial scroll-animate stagger-6">
+                    <p class="testimonial-text">"Roof painting is challenging and potentially dangerous work. Exquisite Painting handled it with complete professionalism, excellent safety, and superior quality work."</p>
+                    <div class="testimonial-author">Robert Williams</div>
+                    <div class="testimonial-role">Freshwater, Northern Beaches</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- SERVICES PAGE -->
+    <div id="services" class="page-container">
+        <section>
+            <div class="section-header">
+                <h2>Complete Painting Solutions</h2>
+                <p>Comprehensive services designed for lasting beauty, durability, and customer satisfaction across Northern Beaches</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card scroll-animate stagger-1">
+                    <h3>Interior Painting</h3>
+                    <p>Transform your interior spaces with expert finishing. Feature walls. Complete room refreshes. Residential renovations. Commercial upgrades. We handle colour consultation, professional surface preparation, premium primers, multiple finish coats, detailed edge and trim work, and complete cleanup. Every interior project receives meticulous attention and professional quality execution.</p>
+                </div>
+                <div class="service-card scroll-animate stagger-2">
+                    <h3>Exterior Painting</h3>
+                    <p>Durable exterior coatings built to protect and beautify for years. Northern Beaches coastal conditions demand specialized systems. We begin with professional pressure cleaning, complete structural assessment and repairs, premium coastal rated primers, weather resistant top coats, professional caulking and sealing, and full project insurance. Your investment is protected and your property transformed.</p>
+                </div>
+                <div class="service-card scroll-animate stagger-3">
+                    <h3>Roof Painting</h3>
+                    <p>Professional roof painting extends roof life, improves appearance, and provides superior weatherproofing. Specialized work requiring expertise, safety protocols, and systems engineered for roof applications. Complete surface cleaning, repair of damaged areas, specialist roof primers, UV resistant roof coatings, and full workmanship warranty. This is professional service.</p>
+                </div>
+                <div class="service-card scroll-animate stagger-4">
+                    <h3>Property Maintenance</h3>
+                    <p>Keep your property pristine with ongoing maintenance services. Seasonal touch ups. Comprehensive care plans. Regular inspections. Preventative planning. Quick response service. Dedicated schedules. Maintenance members receive priority scheduling. Regular maintenance prevents minor issues from becoming major problems and extends the life of your painting systems.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div id="about" class="page-container">
+        <section class="gray">
+            <div class="section-header">
+                <h2>The Story of Exquisite Painting</h2>
+                <p>25 years of building excellence through expertise, commitment, and genuine care</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="about-content">
+                <div class="about-text scroll-animate">
+                    <h3>Founded on Quality</h3>
+                    <p>Exquisite Painting was established in 1999 with one principle that has never changed: quality is non negotiable. This principle has guided every decision, every project, every customer conversation for 25 years. It still does today.</p>
+
+                    <h4>The Core Values of Exquisite Painting</h4>
+                    <p>Quality is our foundation. We believe that cutting corners is never acceptable. That your property deserves the best effort and best materials. That painting is an investment in your home or business. That work done right lasts longer and looks better. These values define who we are and how we work.</p>
+
+                    <h4>A Quarter Century of Service</h4>
+                    <p>We have painted residential homes from modest refreshes to multimillion dollar estates. Commercial properties from small offices to large complexes. Heritage buildings requiring specialist techniques. Multi unit developments demanding precision. Industrial facilities with specialized requirements. Every project treated with the same dedication and attention to detail.</p>
+
+                    <h4>Why Preparation Matters</h4>
+                    <p>A fresh coat of paint without proper preparation fails. Professional preparation, premium materials, skilled application, and meticulous inspection are not extras. They are the foundation of quality work that stands the test of time. We do it right or we do not do it at all.</p>
+
+                    <div class="about-highlights">
+                        <div class="highlight scroll-animate stagger-1">
+                            <h4>25 Years Strong</h4>
+                            <p>Continuous growth, trust, and excellence in the painting industry</p>
+                        </div>
+                        <div class="highlight scroll-animate stagger-2">
+                            <h4>Premium Materials Only</h4>
+                            <p>Finest paints and coatings specified without compromise</p>
+                        </div>
+                        <div class="highlight scroll-animate stagger-3">
+                            <h4>Coastal Proven</h4>
+                            <p>Expert systems built for Northern Beaches conditions</p>
+                        </div>
+                        <div class="highlight scroll-animate stagger-4">
+                            <h4>Meticulous Work</h4>
+                            <p>Every detail inspected and perfected for flawless results</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image scroll-animate">
+                    <div style="position: relative; z-index: 2; text-align: center; padding: 2rem;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem; font-weight: 700;">25</div>
+                        <div style="font-size: 1.5rem; margin-bottom: 1.5rem;">Years of Excellence</div>
+                        <div style="opacity: 0.9; font-size: 0.95rem; line-height: 1.8;">Exquisite Painting is built on unwavering commitment to quality. Quarter century of professional service. Hundreds of satisfied customers. One core principle: quality is non negotiable.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="gray">
+            <div class="section-header">
+                <h2>Client Testimonials</h2>
+                <p>Real feedback from real customers who have experienced Exquisite Painting</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial scroll-animate stagger-1">
+                    <p class="testimonial-text">"Exquisite Painting transformed our interior completely. The attention to detail is absolutely remarkable. Every edge is perfect, every finish is flawless. We would not trust anyone else."</p>
+                    <div class="testimonial-author">Sarah Mitchell</div>
+                    <div class="testimonial-role">Collaroy, Northern Beaches</div>
+                </div>
+                <div class="testimonial scroll-animate stagger-2">
+                    <p class="testimonial-text">"25 years in the industry shows in every aspect. Professional, punctual, and superior quality. Our property looks better than when it was originally built."</p>
+                    <div class="testimonial-author">David Chen</div>
+                    <div class="testimonial-role">Manly, Northern Beaches</div>
+                </div>
+                <div class="testimonial scroll-animate stagger-3">
+                    <p class="testimonial-text">"We have used Exquisite Painting for both interior and exterior work multiple times. Consistently exceptional. Meticulous preparation, beautiful finishes, genuine care for our property."</p>
+                    <div class="testimonial-author">Jennifer and Michael Ross</div>
+                    <div class="testimonial-role">Pittwater, Northern Beaches</div>
+                </div>
+                <div class="testimonial scroll-animate stagger-4">
+                    <p class="testimonial-text">"Commercial exterior project. Exquisite Painting managed it flawlessly with no disruption, superior quality, and finished on schedule. Professional excellence throughout."</p>
+                    <div class="testimonial-author">Andrew Thompson</div>
+                    <div class="testimonial-role">Dee Why, Northern Beaches</div>
+                </div>
+                <div class="testimonial scroll-animate stagger-5">
+                    <p class="testimonial-text">"Heritage property restoration requiring specialist knowledge. Exquisite Painting's experience with period appropriate finishes was invaluable. Outstanding work from start to finish."</p>
+                    <div class="testimonial-author">Margaret Collins</div>
+                    <div class="testimonial-role">Narrabeen, Northern Beaches</div>
+                </div>
+                <div class="testimonial scroll-animate stagger-6">
+                    <p class="testimonial-text">"Roof painting is challenging and potentially dangerous work. Exquisite Painting handled it with complete professionalism, excellent safety, and superior quality work."</p>
+                    <div class="testimonial-author">Robert Williams</div>
+                    <div class="testimonial-role">Freshwater, Northern Beaches</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- PROCESS PAGE -->
+    <div id="process" class="page-container">
+        <section>
+            <div class="section-header">
+                <h2>Our Professional Process</h2>
+                <p>How Exquisite Painting delivers quality from initial consultation through to final handover</p>
+            </div>
+            <div class="process-grid">
+                <div class="process-step scroll-animate stagger-1">
+                    <div class="process-number">01</div>
+                    <h3>Initial Consultation</h3>
+                    <p>We listen to your vision. Assess your property. Identify potential challenges. Provide honest expert guidance. No pressure. No sales tactics. Just genuine expertise and a clear pathway forward based on your needs and our professional assessment.</p>
+                </div>
+                <div class="process-step scroll-animate stagger-2">
+                    <div class="process-number">02</div>
+                    <h3>Detailed Assessment</h3>
+                    <p>Thorough inspection of all surfaces, structural condition, potential issues, and specific material requirements. We identify what needs repair, what requires preparation, and what coating systems will deliver lasting results. This assessment drives the entire project approach.</p>
+                </div>
+                <div class="process-step scroll-animate stagger-3">
+                    <div class="process-number">03</div>
+                    <h3>Transparent Quote</h3>
+                    <p>Clear and detailed quote with no hidden costs. Full specification of materials, timeline, scope of work, and comprehensive breakdown. You understand exactly what you are getting and why. Complete transparency from Exquisite Painting is standard.</p>
+                </div>
+                <div class="process-step scroll-animate stagger-4">
+                    <div class="process-number">04</div>
+                    <h3>Professional Preparation</h3>
+                    <p>The foundation of quality. Proper cleaning, structural repairs, surface preparation, and priming. This stage determines the final result. We never cut corners on preparation. This is where excellence begins.</p>
+                </div>
+                <div class="process-step scroll-animate stagger-5">
+                    <div class="process-number">05</div>
+                    <h3>Expert Application</h3>
+                    <p>Skilled painting with premium materials. Every stroke deliberate and careful. Every edge clean and precise. Every detail perfect. Meticulous execution is our standard, not an exception. This is where our experience and skill shine through clearly.</p>
+                </div>
+                <div class="process-step scroll-animate stagger-6">
+                    <div class="process-number">06</div>
+                    <h3>Final Inspection</h3>
+                    <p>Complete inspection of every detail before handover. Professional cleanup. Final walkthrough with you. Your property transformed and ready to enjoy. This is the finish that defines us and demonstrates our commitment.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- AREAS PAGE -->
+    <div id="areas" class="page-container">
+        <section class="gray">
+            <div class="section-header">
+                <h2>Service Coverage</h2>
+                <p>Exquisite Painting serves all of Northern Beaches with expert professional painting services</p>
+            </div>
+            <div class="areas-grid">
+                <div class="area-card scroll-animate stagger-1">
+                    <h3>Northern Beaches Complete Coverage</h3>
+                    <p>Exquisite Painting serves all Northern Beaches suburbs with professional painting services and expert knowledge of local conditions. We know the properties, the climate challenges, and the community expectations. Northern Beaches is where we have built our reputation over 25 years.</p>
+                    <div class="suburb-list">
+                        Service includes: Collaroy, Narrabeen, Curl Curl, Dee Why, Freshwater, Manly, Fairlight, Shelly Beach, Pittwater, Brookvale, Frenchs Forest, Harbord, Elanora Heights, Forestville, Mona Vale, Newport, Whale Beach, Palm Beach, Clareville, Smiths Beach, Church Point, and all Northern Beaches suburbs.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FAQ PAGE -->
+    <div id="faq" class="page-container">
+        <section>
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Answers to common questions about Exquisite Painting and our services</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item scroll-animate">
+                    <div class="faq-question">
+                        <span>What makes Exquisite Painting different from other companies?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Exquisite Painting has been built over 25 years on one core principle: quality is non negotiable. We use premium materials, prepare surfaces properly, employ skilled professionals, and stand behind every project. We do not cut corners. We do not use budget materials. We deliver professional quality that lasts. That is what sets us apart from everyone else.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item scroll-animate">
+                    <div class="faq-question">
+                        <span>How long has Exquisite Painting been operating?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Exquisite Painting was established in 1999. For 25 years, we have served Northern Beaches with professional painting services. Our longevity in the industry reflects customer trust and satisfied clients who return to us again and again for their painting needs.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item scroll-animate">
+                    <div class="faq-question">
+                        <span>What areas do you service?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Exquisite Painting serves all Northern Beaches suburbs including Collaroy, Narrabeen, Curl Curl, Dee Why, Freshwater, Manly, Fairlight, Shelly Beach, Pittwater, and all surrounding Northern Beaches areas. Northern Beaches is our primary service area where we have built our reputation over 25 years.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item scroll-animate">
+                    <div class="faq-question">
+                        <span>Do you provide free quotes?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes, Exquisite Painting provides free, no obligation quotes. We visit your property, assess the scope of work, understand your vision, and provide a detailed, transparent quote with no hidden costs. No pressure. You get our honest professional assessment and transparent pricing. Use our online form or call directly at 0402 049 320 to arrange your free quote.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item scroll-animate">
+                    <div class="faq-question">
+                        <span>What brands of paint do you use?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Exquisite Painting specifies only premium paint brands proven for durability, colour retention, and coastal performance. We use products from manufacturers who deliver superior quality. Specific product selections depend on your project requirements, surfaces, and desired finish. We discuss all material options during the quote process so you understand exactly what will be applied to your property.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item scroll-animate">
+                    <div class="faq-question">
+                        <span>How long does a typical painting project take?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Project timelines vary based on scope, size, surface condition, and weather. A small interior room might take one to two days. A full home exterior could take two to four weeks depending on size and condition. Roof painting varies based on roof size and material. During your quote consultation, we provide a detailed timeline for your specific project. We manage schedules professionally and respect your time commitments.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item scroll-animate">
+                    <div class="faq-question">
+                        <span>What warranty do you provide?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Exquisite Painting provides professional workmanship warranty on all projects. Material warranties are honored by manufacturers and supported by us. If any issue arises with our work or specified materials, we address it completely. Your satisfaction is our commitment. Specific warranty details are outlined in your project quote and contract. We stand behind our work completely and professionally.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item scroll-animate">
+                    <div class="faq-question">
+                        <span>Do you handle heritage or specialty painting?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes, Exquisite Painting has experience with heritage properties requiring historically accurate finishes and specialist techniques. We have completed restoration projects on older homes and heritage buildings across Northern Beaches. We also handle specialty applications including exterior coatings, roof systems, commercial work, and multi unit complexes. If you have a specialized project, contact us to discuss your specific requirements and how we can help.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item scroll-animate">
+                    <div class="faq-question">
+                        <span>Are you fully insured?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes, Exquisite Painting carries comprehensive insurance coverage including liability, workers compensation, and project insurance. All required licenses and certifications are current and valid. Your property and our team are fully protected throughout every project. Insurance documentation is available upon request during your quote consultation at no cost.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item scroll-animate">
+                    <div class="faq-question">
+                        <span>How can I contact Exquisite Painting?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Contact Exquisite Painting by phone at 0402 049 320 or email exquisitepainting@live.com.au. You can also use our online quote request form on the contact page. We typically respond to enquiries within 24 hours. For immediate consultation or to discuss your project in detail, call us directly. We are available to answer your questions and schedule your free property assessment.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="contact" class="page-container">
+        <section class="quote-section">
+            <h2 class="scroll-animate" style="animation: slideInUp 0.9s ease-out;">Claim Your Free Quote</h2>
+            <p class="scroll-animate" style="animation: slideInUp 0.9s ease-out 0.2s both;">No obligation. No pressure. Professional assessment of your project, transparent pricing, and a clear pathway to beautiful results.</p>
+            
+            <form class="quote-form" id="quoteForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="0402 123 456">
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="service">Service Type</label>
+                        <select id="service" name="service" required>
+                            <option value="">Select a service</option>
+                            <option value="interior">Interior Painting</option>
+                            <option value="exterior">Exterior Painting</option>
+                            <option value="roof">Roof Painting</option>
+                            <option value="maintenance">Property Maintenance</option>
+                            <option value="other">Other or Multiple Services</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="suburb">Northern Beaches Suburb</label>
+                        <input type="text" id="suburb" name="suburb" required placeholder="e.g. Collaroy, Manly, Dee Why">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="property">Property Type</label>
+                        <select id="property" name="property">
+                            <option value="">Select property type</option>
+                            <option value="residential">Residential Home</option>
+                            <option value="apartment">Apartment</option>
+                            <option value="commercial">Commercial</option>
+                            <option value="heritage">Heritage Property</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="timeline">Preferred Timeline</label>
+                        <select id="timeline" name="timeline">
+                            <option value="">Select timeline</option>
+                            <option value="immediate">As soon as possible</option>
+                            <option value="month">Within 1 month</option>
+                            <option value="quarter">Within 3 months</option>
+                            <option value="flexible">Flexible</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row full">
+                    <div class="form-group">
+                        <label for="message">Project Details</label>
+                        <textarea id="message" name="message" required placeholder="Tell us about your project. What surfaces need painting. What are your specific concerns. What is your vision."></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="form-submit">Get My Free Quote</button>
+            </form>
+
+            <div class="contact-info scroll-animate">
+                <p style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem;">Direct Contact Information</p>
+                <p>Phone: <a href="tel:0402049320">0402 049 320</a></p>
+                <p>Email: <a href="mailto:exquisitepainting@live.com.au">exquisitepainting@live.com.au</a></p>
+                <p style="margin-top: 2rem; font-size: 0.9rem; color: rgba(255,255,255,0.8);">We typically respond to enquiries within 24 hours. Call for immediate consultation or to discuss your project details.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Exquisite Painting</h4>
+                <p>Premium painting services built on 25 years of excellence, precision, and unwavering commitment to quality. Expert professional service across Northern Beaches.</p>
+                <p style="margin-top: 1rem;"><strong>Core Principle:</strong> Quality is non negotiable.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <p><a onclick="navigateTo('home')">Home</a></p>
+                <p><a onclick="navigateTo('services')">Services</a></p>
+                <p><a onclick="navigateTo('about')">About Us</a></p>
+                <p><a onclick="navigateTo('process')">Process</a></p>
+                <p><a onclick="navigateTo('areas')">Service Areas</a></p>
+                <p><a onclick="navigateTo('faq')">FAQ</a></p>
+                <p><a onclick="navigateTo('contact')">Get a Quote</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>Phone: <a href="tel:0402049320">0402 049 320</a></p>
+                <p>Email: <a href="mailto:exquisitepainting@live.com.au">exquisitepainting@live.com.au</a></p>
+                <p style="margin-top: 1.5rem; font-size: 0.85rem;">Professional painting services across all Northern Beaches suburbs with professional commitment to quality.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p><strong>Exquisite Painting</strong> | Premium Painting Services | Northern Beaches</p>
+            <p>Copyright 2024 Exquisite Painting. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('mobileOverlay');
+            
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('mobileOverlay');
+            
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        function navigateTo(page) {
+            document.querySelectorAll('.page-container').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            const targetPage = document.getElementById(page);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo(0, 0);
+                
+                setTimeout(() => {
+                    animateOnScroll();
+                }, 100);
+            }
+        }
+
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.scroll-animate');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 80);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -80px 0px'
+            });
+            
+            elements.forEach(el => observer.observe(el));
+        }
+
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.querySelector('.faq-question').addEventListener('click', function() {
+                item.classList.toggle('active');
+            });
+        });
+
+        document.getElementById('quoteForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your enquiry. Exquisite Painting will contact you within 24 hours.\n\nPhone: 0402 049 320\nEmail: exquisitepainting@live.com.au');
+            this.reset();
+        });
+
+        animateOnScroll();
+    </script>
+</body>
+</html>
